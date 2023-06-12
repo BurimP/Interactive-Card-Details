@@ -59,6 +59,23 @@ body {
   align-items: center;
   color: white;
 }
+
+.big-circle {
+  background-color: white;
+  border: none;
+  border-radius: 50%;
+  height: 5rem;
+  width: 5rem;
+  transform: translate(-50%, 20%);
+}
+.small-circle {
+  background-color: transparent;
+  border: 2px solid white;
+  border-radius: 50%;
+  height: 2rem;
+  width: 2rem;
+  transform: translate(-450%, 60%);
+}
 .month-year {
   grid-row: 4;
   grid-column: 3;
@@ -333,12 +350,7 @@ body {
 
 @media screen and (max-width: 550px) {
   html {
-    font-size: 8px;
-  }
-  .back-card,
-  .front-card {
-    height: 15rem;
-    width: 28rem;
+    font-size: 7px;
   }
 }
 
