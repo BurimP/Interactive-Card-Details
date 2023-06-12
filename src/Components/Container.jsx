@@ -13,13 +13,6 @@ const Container = () => {
   const [confirm, setConfirm] = useState(false);
   const [slash, setSlash] = useState(false);
 
-  const handleBlankInput = () => {};
-
-  const [confirmDelete, setConfirmDelete] = useState("confirmation");
-  const handleConfirmDelete = () => {
-    setConfirmDelete("confirmation-delete");
-  };
-
   const handleCvc = (cvc) => {
     setCvc(cvc);
   };
@@ -38,6 +31,21 @@ const Container = () => {
   const handleSlash = () => {
     setSlash(true);
   };
+
+  const handleBlankInput = () => {
+    setName("");
+    setCardNumber("");
+    setMonth("");
+    setYear("");
+    setCvc("");
+    setSlash(false);
+  };
+  const [confirmDelete, setConfirmDelete] = useState("confirmation");
+
+  const handleConfirmDelete = () => {
+    setConfirmDelete("confirmation-delete");
+  };
+
   return (
     <div className="container">
       <FrontCard
@@ -57,11 +65,14 @@ const Container = () => {
         confirm={setConfirm}
         slash={handleSlash}
         handleBlankInput={handleBlankInput}
+        setConfirmDelete={setConfirmDelete}
       />
       {confirm && (
         <Confirmation
           confirmDelete={confirmDelete}
           handleConfirmDelete={handleConfirmDelete}
+          handleBlankInput={handleBlankInput}
+          onButtonClick={handleBlankInput}
         />
       )}
     </div>

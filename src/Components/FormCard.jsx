@@ -7,11 +7,13 @@ const Form = (props) => {
   const [year, setYear] = useState("");
   const [cvc, setCVC] = useState("");
 
+  const [wrongName, setWrongName] = useState("wrong-name-hidden");
   const [wrongCardNumber, setWrongCardNumber] = useState("wrong-format-hidden");
   const [wrongMonth, setWrongMonth] = useState("blank-month-hidden");
   const [wrongYear, setWrongYear] = useState("blank-year-hidden");
   const [wrongCvc, setWrongCvc] = useState("blank-cvc-hidden ");
 
+  const [redName, setRedName] = useState("name");
   const [redCard, setRedCard] = useState("cardNumber");
   const [redMonth, setRedMonth] = useState("expiryMonth");
   const [redYear, setRedYear] = useState("expiryYear");
@@ -20,25 +22,26 @@ const Form = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // const handleBlankInput = () => {
-    //   setName("");
-    //   setCardNumber("");
-    //   setMonth("");
-    //   setYear("");
-    //   setCVC("");
-    // };
-
     console.log("Form submitted");
+    if (name === "") {
+      setWrongName("wrong-name");
+      setRedName("nameRed");
+    } else {
+      setWrongName("wrong-name-hidden");
+      setRedName("name");
+      props.name(name);
+      setName("");
+    }
+    // /[^0-9\s]/.test(cardNumber)
 
-    props.name(name);
-
-    if (/[^0-9\s]/.test(cardNumber)) {
+    if (/[^0-9\s]/.test(cardNumber) || cardNumber === "") {
       setWrongCardNumber("wrong-format");
       setRedCard("cardNumberRed");
     } else {
       setWrongCardNumber("wrong-format-hidden");
       setRedCard("cardNumber");
       props.cardNumber(cardNumber);
+      setCardNumber("");
     }
 
     if (month === "") {
@@ -48,6 +51,7 @@ const Form = (props) => {
       setWrongMonth("blank-month-hidden");
       setRedMonth("expiryMonth");
       props.month(month);
+      setMonth("");
     }
 
     if (year === "") {
@@ -57,6 +61,7 @@ const Form = (props) => {
       setWrongYear("blank-year-hidden");
       setRedYear("expiryYear");
       props.year(year);
+      setYear("");
     }
 
     if (month != "" && year != "") {
@@ -70,6 +75,7 @@ const Form = (props) => {
       setWrongCvc("blank-cvc-hidden");
       setRedCvc("cvc");
       props.cvc(cvc);
+      setCVC("");
     }
 
     if (
@@ -80,6 +86,7 @@ const Form = (props) => {
       name != ""
     ) {
       props.confirm(true);
+      props.setConfirmDelete("confirmation");
     } else {
       props.confirm(false);
     }
@@ -102,10 +109,11 @@ const Form = (props) => {
         <label htmlFor="name">cardholder name</label>
         <input
           type="text"
-          id="name"
+          id={redName}
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
+        <label className={wrongName}>Can&apos;t be blank</label>
       </div>
       <div className="form-row">
         <label htmlFor="cardNumber">Card Number</label>
