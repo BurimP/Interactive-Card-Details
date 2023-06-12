@@ -375,6 +375,16 @@ body {
   }
 }
 
+@media screen and (max-width: 450px) {
+  .front-card {
+    height: 18rem;
+    width: 32rem;
+    grid-column: 2 / span 8;
+    grid-row: 3 / span 4;
+    z-index: 999;
+  }
+}
+
 @media screen and (max-width: 375px) {
   html {
     font-size: 8px;
