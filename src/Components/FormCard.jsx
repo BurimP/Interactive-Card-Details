@@ -1,16 +1,51 @@
 import React, { useState } from "react";
 
-const Form = () => {
+const Form = (props) => {
   const [name, setName] = useState("");
   const [cardNumber, setCardNumber] = useState("");
-  const [expiryMonth, setExpiryMonth] = useState("");
-  const [expiryYear, setExpiryYear] = useState("");
+  const [month, setMonth] = useState("");
+  const [year, setYear] = useState("");
   const [cvc, setCVC] = useState("");
+
+  const [wrongCardNumber, setWrongCardNumber] = useState("wrong-format-hidden");
+  const [wrongMonth, setWrongMonth] = useState("blank-month-hidden");
+  const [wrongYear, setWrongYear] = useState("blank-year-hidden");
+  const [wrongCvc, setWrongCvc] = useState("blank-cvc-hidden ");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission logic here
+
     console.log("Form submitted");
+
+    props.name(name);
+
+    if (cardNumber === "") {
+      setWrongCardNumber("wrong-format");
+    } else {
+      setWrongCardNumber("wrong-format-hidden");
+      props.cardNumber(cardNumber);
+    }
+
+    if (month === "") {
+      setWrongMonth("blank-month");
+    } else {
+      setWrongMonth("blank-month-hidden");
+      props.month(month);
+    }
+
+    if (year === "") {
+      setWrongYear("blank-year");
+    } else {
+      setWrongYear("blank-year-hidden");
+      props.year(year);
+    }
+
+    if (cvc === "") {
+      setWrongCvc("blank-cvc");
+    } else {
+      setWrongCvc("blank-cvc-hidden");
+      props.cvc(cvc);
+    }
   };
 
   return (
@@ -32,7 +67,9 @@ const Form = () => {
           value={cardNumber}
           onChange={(e) => setCardNumber(e.target.value)}
         />
+        <label className={wrongCardNumber}>Wrong format, numbers only</label>
       </div>
+      {/* <div className="wrong-format">Wrong format, numbers only</div> */}
       <div className="form-row">
         <div className="form-row-inline">
           <div className="form-row2">
@@ -41,9 +78,10 @@ const Form = () => {
               type="text"
               id="expiryMonth"
               placeholder="MM"
-              value={expiryMonth}
-              onChange={(e) => setExpiryMonth(e.target.value)}
+              value={month}
+              onChange={(e) => setMonth(e.target.value)}
             />
+            <label className={wrongMonth}>Can&apos;t be blank</label>
           </div>
           <div className="form-row2">
             <label htmlFor="expiryMonth">Year</label>
@@ -51,9 +89,10 @@ const Form = () => {
               type="text"
               id="expiryYear"
               placeholder="YY"
-              value={expiryYear}
-              onChange={(e) => setExpiryYear(e.target.value)}
+              value={year}
+              onChange={(e) => setYear(e.target.value)}
             />
+            <label className={wrongYear}>Can&apos;t be blank</label>
           </div>
           <div className="form-row2">
             <label htmlFor="cvc">CVC</label>
@@ -64,6 +103,7 @@ const Form = () => {
               value={cvc}
               onChange={(e) => setCVC(e.target.value)}
             />
+            <label className={wrongCvc}>Can&apos;t be blank</label>
           </div>
         </div>
       </div>
